@@ -18,7 +18,7 @@
 	<testsuites>
 		<!-- Default test suite to run all tests. -->
 		<testsuite name="default">
-			<directory suffix=".php">./</directory>
+			<directory suffix=".php">./tests</directory>
 		</testsuite>
 	</testsuites>
 	<groups>
@@ -28,7 +28,7 @@
 	</groups>
 	<coverage includeUncoveredFiles="true" processUncoveredFiles="false" pathCoverage="true" cacheDirectory="./cache">
 		<include>
-			<directory suffix=".php">../includes</directory>
+			<directory suffix=".php">../../../includes</directory>
 		</include>
 		<exclude>
 			<file>../includes/autoload.php</file>
