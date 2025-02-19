@@ -391,6 +391,32 @@ class APIRewrite_PreHttpRequestTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test that a redirected host beginning with http:// is respected.
+	 */
+	public function test_should_respect_http_in_the_redirected_host() {
+		$actual = '';
+
+		add_filter(
+			'pre_http_request',
+			static function ( $response, $parsed_args, $url ) use ( &$actual ) {
+				$actual = $url;
+				return $response;
+			},
+			PHP_INT_MAX,
+			3
+		);
+
+		$api_rewrite = new AspireUpdate\API_Rewrite( 'http://my.api.org', true, '' );
+		$api_rewrite->pre_http_request(
+			[],
+			[],
+			'https://' . $this->get_default_host() . '/file.php'
+		);
+
+		$this->assertStringStartsWith( 'http://my.api.org', $actual );
+	}
+
+	/**
 	 * Gets the default host.
 	 *
 	 * @return string The default host.
