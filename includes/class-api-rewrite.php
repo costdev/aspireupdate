@@ -114,7 +114,7 @@ class API_Rewrite {
 	 * @param array  $parsed_args The arguments for the request.
 	 * @param string $url The URL for the request.
 	 *
-	 * @return mixed The response or false.
+	 * @return false|array|WP_Error The original value, the new response, or WP_Error on failure.
 	 */
 	public function pre_http_request( $response, $parsed_args, $url ) {
 		if ( '' === $this->redirected_host || false === strpos( $url, $this->default_host ) ) {
