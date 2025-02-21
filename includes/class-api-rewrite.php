@@ -50,7 +50,7 @@ class API_Rewrite {
 		if ( 'debug' === $redirected_host ) {
 			$this->redirected_host = $this->default_host;
 		} else {
-			$this->redirected_host = strtolower( $redirected_host );
+			$this->redirected_host = trim( strtolower( $redirected_host ) );
 		}
 		$this->disable_ssl = $disable_ssl;
 		$this->api_key     = $api_key;
