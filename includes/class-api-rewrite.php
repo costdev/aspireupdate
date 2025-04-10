@@ -193,6 +193,24 @@ class API_Rewrite {
 			if ( false !== strpos( $url, $this->default_host ) ) {
 				Debug::log_string( __( 'Default API Found: ', 'aspireupdate' ) . $url );
 
+				if ( false !== $response ) {
+					$admin_settings = \AspireUpdate\Admin_Settings::get_instance();
+					$compatibility  = $admin_settings->get_setting( 'compatibility' );
+
+					if ( ! empty( $compatibility['skip_rewriting_on_existing_response'] ) ) {
+						Debug::log_string(
+							sprintf(
+								/* translators: 1: The options' name, 2: The constant's name, 3: The explicitly required value. */
+								__( 'API rewriting has been skipped because the response has already been changed. Enable the %1$s option or set "%1$s" in the %2$s constant to %3$s to continue with API rewriting in future.', 'aspireupdate' ),
+								'skip_rewriting_on_existing_response',
+								'AP_COMPATIBILITY',
+								'true'
+							)
+						);
+						return $response;
+					}
+				}
+
 				if ( false === filter_var( $this->redirected_host, FILTER_VALIDATE_URL ) ) {
 					$error_message = __( 'Your API host is not a valid URL.', 'aspireupdate' );
 					Debug::log_string(
