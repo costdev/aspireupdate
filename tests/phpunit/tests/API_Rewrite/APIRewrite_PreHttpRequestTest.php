@@ -944,6 +944,160 @@ class APIRewrite_PreHttpRequestTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test that existing responses are not overridden when the 'AP_OVERRIDE_EXISTING_RESPONSES'
+	 * constant is set to false.
+	 *
+	 * This test causes constants to be defined.
+	 * It must run in separate processes and must not preserve global state.
+	 *
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_should_not_override_existing_responses_when_the_ap_override_existing_responses_constant_is_set_to_false() {
+		define( 'AP_ENABLE', true );
+		define( 'AP_OVERRIDE_EXISTING_RESPONSES', false );
+
+		$default_host = 'https://' . $this->get_default_host();
+
+		add_filter(
+			'pre_http_request',
+			static function ( $response, $parsed_args, $url ) use ( $default_host ) {
+				if ( $default_host === $url ) {
+					return [ 'body' => 'Test Response' ];
+				}
+
+				return $response;
+			},
+			0,
+			3
+		);
+
+		new \AspireUpdate\API_Rewrite( 'my.api.org', true, '' );
+		$response = wp_remote_get( $default_host );
+		$body     = wp_remote_retrieve_body( $response );
+
+		$this->assertSame( 'Test Response', $body );
+	}
+
+	/**
+	 * Test that existing responses are not overridden when the 'override_existing_responses'
+	 * option is disabled.
+	 *
+	 * This test causes constants to be defined.
+	 * It must run in separate processes and must not preserve global state.
+	 *
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_should_not_override_existing_responses_when_the_override_existing_responses_option_is_disabled() {
+		update_site_option(
+			'aspireupdate_settings',
+			[
+				'enable'                      => 1,
+				'override_existing_responses' => 0,
+			]
+		);
+
+		$default_host = 'https://' . $this->get_default_host();
+
+		add_filter(
+			'pre_http_request',
+			static function ( $response, $parsed_args, $url ) use ( $default_host ) {
+				if ( $default_host === $url ) {
+					return [ 'body' => 'Test Response' ];
+				}
+
+				return $response;
+			},
+			0,
+			3
+		);
+
+		new \AspireUpdate\API_Rewrite( 'my.api.org', true, '' );
+		$response = wp_remote_get( $default_host );
+		$body     = wp_remote_retrieve_body( $response );
+
+		$this->assertSame( 'Test Response', $body );
+	}
+
+	/**
+	 * Test that existing responses are overridden when the 'AP_OVERRIDE_EXISTING_RESPONSES'
+	 * constant is set to true.
+	 *
+	 * This test causes constants to be defined.
+	 * It must run in separate processes and must not preserve global state.
+	 *
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_should_override_existing_responses_when_the_ap_override_existing_responses_constant_is_set_to_true() {
+		define( 'AP_ENABLE', true );
+		define( 'AP_OVERRIDE_EXISTING_RESPONSES', true );
+
+		$default_host = 'https://' . $this->get_default_host();
+
+		add_filter(
+			'pre_http_request',
+			static function ( $response, $parsed_args, $url ) use ( $default_host ) {
+				if ( $default_host === $url ) {
+					return [ 'body' => 'Test Response' ];
+				}
+
+				return $response;
+			},
+			0,
+			3
+		);
+
+		new \AspireUpdate\API_Rewrite( 'my.api.org', true, '' );
+		$response = wp_remote_get( $default_host );
+		$body     = wp_remote_retrieve_body( $response );
+
+		$this->assertNotSame( 'Test Response', $body );
+	}
+
+	/**
+	 * Test that existing responses are overridden when the 'override_existing_responses'
+	 * option is enabled.
+	 *
+	 * This test causes constants to be defined.
+	 * It must run in separate processes and must not preserve global state.
+	 *
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_should_override_existing_responses_when_the_override_existing_responses_option_is_enabled() {
+		update_site_option(
+			'aspireupdate_settings',
+			[
+				'enable'                      => 1,
+				'override_existing_responses' => 1,
+			]
+		);
+
+		$default_host = 'https://' . $this->get_default_host();
+
+		add_filter(
+			'pre_http_request',
+			static function ( $response, $parsed_args, $url ) use ( $default_host ) {
+				if ( $default_host === $url ) {
+					return [ 'body' => 'Test Response' ];
+				}
+
+				return $response;
+			},
+			0,
+			3
+		);
+
+		new \AspireUpdate\API_Rewrite( 'my.api.org', true, '' );
+		$response = wp_remote_get( $default_host );
+		$body     = wp_remote_retrieve_body( $response );
+
+		$this->assertNotSame( 'Test Response', $body );
+	}
+
+	/**
 	 * Gets the default host.
 	 *
 	 * @return string The default host.
