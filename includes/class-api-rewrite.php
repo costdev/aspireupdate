@@ -56,7 +56,7 @@ class API_Rewrite {
 		$this->api_key     = $api_key;
 
 		if ( Admin_Settings::get_instance()->get_setting( 'enable', false ) ) {
-			add_filter( 'pre_http_request', [ $this, 'pre_http_request' ], 10, 3 );
+			add_filter( 'pre_http_request', [ $this, 'pre_http_request' ], PHP_INT_MAX, 3 );
 		}
 	}
 
