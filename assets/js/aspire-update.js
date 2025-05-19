@@ -9,6 +9,7 @@ jQuery(document).ready(function () {
 
 class AdminNotice {
 	static add(message, args) {
+		wp = window.wp || {};
 		args = {
 			type: args.type || 'info',
 			dismissible: typeof args.dismissible !== 'undefined' ? args.dismissible : true,
@@ -27,6 +28,8 @@ class AdminNotice {
 		} else {
 			jQuery('h1').after(adminNotice);
 		}
+
+		wp.a11y.speak(message);
 
 		// Adds dismiss functionality to dismissible notices.
 		jQuery(document).trigger('wp-notice-added');
