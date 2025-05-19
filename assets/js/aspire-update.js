@@ -282,7 +282,6 @@ class ApiRewrites {
 			ApiRewrites.other_hosts.field.on("blur", function (event) {
 				let parent = ApiRewrites.other_hosts.field.parent();
 				let current_field = ApiRewrites.other_hosts.field.get(0);
-				console.log(current_field.checkValidity());
 				current_field.setCustomValidity("");
 				if (parent.is(":visible") && !current_field.checkValidity()) {
 					current_field.setCustomValidity(aspireupdate.api_host_other_error);
