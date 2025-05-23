@@ -445,7 +445,7 @@ class Admin_Settings {
 				'id'    => 'enable',
 				'type'  => 'checkbox',
 				'data'  => $options,
-				'label' => esc_html__( 'Rewrite WordPress.org requests', 'aspireupdate' ),
+				'label' => esc_html__( 'Rewrite API requests', 'aspireupdate' ),
 			]
 		);
 
