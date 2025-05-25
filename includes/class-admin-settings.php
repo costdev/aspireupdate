@@ -715,7 +715,7 @@ class Admin_Settings {
 				</select>
 				<p>
 					<label for="aspireupdate-settings-field-<?php echo esc_attr( $id ); ?>_other">
-						<?php esc_html_e( 'Enter a custom API host. Ensure that it starts with http:// or https://', 'aspireupdate' ); ?>
+						<?php esc_html_e( 'Enter a custom API host. Ensure that it starts with https://.', 'aspireupdate' ); ?>
 					</label><br>
 					<input
 						type="url"
