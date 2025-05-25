@@ -279,7 +279,7 @@ class ApiRewrites {
 	static other_hosts = {
 		field: jQuery('#aspireupdate-settings-field-api_host_other'),
 		init() {
-			ApiRewrites.other_hosts.field.on("blur", function (event) {
+			ApiRewrites.other_hosts.field.on("blur", function () {
 				let parent = ApiRewrites.other_hosts.field.parent();
 				let current_field = ApiRewrites.other_hosts.field.get(0);
 				current_field.setCustomValidity("");
