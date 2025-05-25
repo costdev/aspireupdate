@@ -315,9 +315,9 @@ class ApiRewrites {
 	static api_key = {
 		field: jQuery('#aspireupdate-settings-field-api_key'),
 		action_button: jQuery('#aspireupdate-generate-api-key'),
-		action_button_label: jQuery('label[for="aspireupdate-generate-api-key"]'),
 		init() {
-			ApiRewrites.api_key.action_button.click(function () {
+			ApiRewrites.api_key.action_button.click(function (e) {
+				e.preventDefault();
 				ApiRewrites.api_key.get_api_key();
 			});
 		},
@@ -365,11 +365,9 @@ class ApiRewrites {
 		},
 		show_action_button() {
 			ApiRewrites.api_key.action_button.show();
-			ApiRewrites.api_key.action_button_label.show();
 		},
 		hide_action_button() {
 			ApiRewrites.api_key.action_button.hide();
-			ApiRewrites.api_key.action_button_label.hide();
 		},
 		make_required() {
 			ApiRewrites.api_key.field.prop('required', true);

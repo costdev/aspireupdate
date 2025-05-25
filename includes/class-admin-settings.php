@@ -682,8 +682,10 @@ class Admin_Settings {
 						class="regular-text"
 						aria-describedby="aspireupdate-api-key-notice <?php echo $description ? esc_attr( $description_id ) : ''; ?>"
 					/>
-					<input type="button" id="aspireupdate-generate-api-key" value="Generate API Key" />
-					<label for="aspireupdate-generate-api-key"><?php esc_html_e( 'Generate API Key', 'aspireupdate' ); ?></label>
+					<button id="aspireupdate-generate-api-key" class="button button-secondary">
+						<span class="dashicons dashicons-admin-network" aria-hidden="true"></span>
+						<span><?php esc_html_e( 'Generate API Key', 'aspireupdate' ); ?></span>
+					</button>
 					<p id="<?php echo esc_attr( $description_id ); ?>"><?php echo esc_html( $description ); ?></p>
 					<div id="aspireupdate-api-key-notice"></div>
 					<?php
