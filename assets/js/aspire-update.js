@@ -291,9 +291,7 @@ class ApiRewrites {
 		},
 		show() {
 			ApiRewrites.other_hosts.field.parent().show();
-			ApiRewrites.other_hosts.field.focus();
 			ApiRewrites.other_hosts.make_required();
-			ApiRewrites.other_hosts.field.get(0).reportValidity();
 		},
 		hide() {
 			ApiRewrites.other_hosts.field.get(0).setCustomValidity("");
